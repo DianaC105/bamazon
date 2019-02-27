@@ -57,7 +57,7 @@ var connection = mysql.createConnection({
 		name: "quantity",
 		type: "input",
 		message: "How many units of this product would you like to buy?"
-	}
+	},
     ])
   //   ]).then(response => {
 	// console.log(query);
@@ -66,15 +66,44 @@ var connection = mysql.createConnection({
   //   })
 
 
-.then(function(chosenItem){
+.then(function(id,quantity){
   // gets information of the chosen item
-  var chosenItem;
-  for (var i = 0; i < results.length; i++){
-    if (results[i].id ===answer.choice){
-      chosenItem = results[i];
-    }
-  }
-function updateStore(id,quantity){
+   var chosenItem= query.id;
+    for (var i = 0; i < results.length; i++){
+        if (results[i].id ===id.choice){
+     chosenItem = results[i];
+     
+//     }
+     connection.query(
+         'SELECT * FROM products WHERE ?',{ id:chosenItem}, function (err, results)
+         {
+             if (err) throw err;
+             console.log(results);
+         }
+     );
+
+    var chosenQuantity=query.stock_quantity;
+     for (var q= 0; q< results.lenght; q++){
+        if (results[q].stock_quantity===quantity.choice){
+            chosenQuantity = results [q];
+        
+    connection.query(
+        'SELECT * FROM products WHERE ?',{ stock_quantity:chosenQuantity}, function (err, results)
+        {
+            if (err) throw err;
+            console.log(results);
+        }
+    );
+};
+
+};
+        };
+    };
+    updateStore();
+},
+
+//function to Update Store quantity in MySQL Database
+function updateStore(answer){
   connection.query(
     "UPDATE auctions SET ? WHERE ?",
   [
@@ -88,8 +117,6 @@ function updateStore(id,quantity){
   function (err){
     if (error) throw err;
     console.log ("Your purchase has been processed! Thank you!");
-  })
-
-}
+  });
 });
 

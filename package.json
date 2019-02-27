@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/DianaC105/bamazon#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "inquirer": "^6.2.2",
-    "my-sql": "^1.2.15"
+    "my-sql": "^1.2.15",
+    "table": "^5.2.3"
   }
 }
